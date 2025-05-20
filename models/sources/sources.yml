@@ -1,0 +1,75 @@
+version: 2
+
+sources:
+  - name: outreach_raw
+    # The schema for the raw source data is directly the tenant code set in the environment.
+    schema: "{{ env_var('DBT_TENANT_CODE') }}"
+    description: "Source for Outreach data provided by Fivetran, schema named by tenant code."
+    tables:
+      - name: call
+        description: "Outreach calls table."
+        columns:
+          - name: id
+            description: "Primary key for calls."
+            data_tests:
+              - unique
+              - not_null
+          - name: created_at
+            description: "Timestamp of when the call was created."
+          - name: relationship_user_id # Corresponds to callUserIdField_onCallTable
+            description: "Foreign key to the user."
+          - name: relationship_call_disposition_id # Corresponds to callRelationshipToDispositionIdField_onCallTable
+            description: "Foreign key to the call disposition."
+
+      - name: call_disposition
+        description: "Outreach call dispositions table."
+        columns:
+          - name: id # Corresponds to dispositionIdField_onDispositionTable
+            description: "Primary key for call dispositions."
+            data_tests:
+              - unique
+              - not_null
+          - name: name # Corresponds to dispositionNameField_onDispositionTable
+            description: "Name of the call disposition."
+
+      - name: users
+        description: "Outreach users table."
+        columns:
+          - name: id # Corresponds to userIdField_onUserTable
+            description: "Primary key for users."
+            data_tests:
+              - unique
+              - not_null
+          - name: name # Corresponds to userNameField_onUserTable
+            description: "Name of the user."
+
+  - name: salesloft_raw
+    # The schema for the raw source data is directly the tenant code set in the environment.
+    schema: "{{ env_var('DBT_TENANT_CODE') }}"
+    description: "Source for Salesloft data provided by Fivetran, schema named by tenant code."
+    tables:
+      - name: call
+        description: "Salesloft calls table."
+        columns:
+          - name: id
+            description: "Primary key for calls."
+            data_tests:
+              - unique
+              - not_null
+          - name: created_at
+            description: "Timestamp of when the call was created."
+          - name: disposition # Corresponds to callDispositionNameField_onCallTable
+            description: "Disposition of the call."
+          - name: user_id # Corresponds to callUserIdField_onCallTable
+            description: "Foreign key to the user."
+            
+      - name: users
+        description: "Salesloft users table."
+        columns:
+          - name: id # Corresponds to userIdField_onUserTable
+            description: "Primary key for users."
+            data_tests:
+              - unique
+              - not_null
+          - name: name # Corresponds to userNameField_onUserTable
+            description: "Name of the user." 
