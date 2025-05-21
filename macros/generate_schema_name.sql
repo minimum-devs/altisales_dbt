@@ -7,10 +7,10 @@
     {%- endif -%}
 
     {%- if custom_schema_name is none -%}
-        {{ tenant }}_canonical                            -- canonical for models without a specific schema config
+        {{- tenant }}_canonical                        {#- canonical for models without a specific schema config -#}
     {%- elif custom_schema_name.startswith('stg_') -%}
-        {{ tenant }}_{{ custom_schema_name }}             -- staging, e.g., tenant_stg_outreach
+        {{- tenant }}_{{ custom_schema_name }}         {#- staging, e.g., tenant_stg_outreach -#}
     {%- else -%}
-        {{ tenant }}_{{ custom_schema_name }}             -- any other override, e.g., tenant_marts
+        {{- tenant }}_{{ custom_schema_name }}         {#- any other override, e.g., tenant_marts -#}
     {%- endif -%}
 {% endmacro %} 

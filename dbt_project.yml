@@ -18,31 +18,3 @@ macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
 clean-targets:         # directories to be removed by `dbt clean`
-  - "target"
-  - "dbt_packages"
-
-
-# Configuring models
-# Full documentation: https://docs.getdbt.com/docs/configuring-models
-
-# In this example config, we tell dbt to build all models in the example/
-# directory as views. These settings can be overridden in the individual model
-# files using the `{{ config(...) }}` macro.
-models:
-  altisales_dbt:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
-      # schema will default to [tenant_code]_canonical by the macro
-
-    # Config for staging models
-    staging:
-      +materialized: view
-      outreach: # Corresponds to models/staging/outreach
-        +schema: "stg_outreach" # Macro will prepend tenant_code, resulting in [tenant_code]_stg_outreach
-      salesloft: # Corresponds to models/staging/salesloft
-        +schema: "stg_salesloft" # Macro will prepend tenant_code, resulting in [tenant_code]_stg_salesloft
-      # Add other source system staging configs here as needed
-
-# The `vars` block is removed as dynamic_org_schema is no longer needed.
-# The generate_schema_name macro will handle schema generation based on DBT_TENANT_CODE.

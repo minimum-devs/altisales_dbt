@@ -1,4 +1,4 @@
-wwith source as (
+with source as (
 
     select
         -- From users table (aliased as u in TS)
